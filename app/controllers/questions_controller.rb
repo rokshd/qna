@@ -13,6 +13,9 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def index
+  end
+
   private
 
   def question_params
