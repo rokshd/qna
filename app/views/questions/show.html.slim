@@ -5,7 +5,11 @@ p= @question.body
     p Answer list is empty. Do you want to answer?
 - else
   - @question.answers.each do |answer|
-    ul
-      li = answer.body
+    table
+      tr
+        td = answer.body
 
-p= link_to 'Give an answer', new_question_answer_path(@question)
+div = form_for [@question, @answer] do |f|
+  p= f.label :body, "Your answer:"
+  p= f.text_area :body
+  p= f.submit 'Create'
