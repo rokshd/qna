@@ -1,0 +1,11 @@
+h1= @question.title
+p= @question.body
+
+- if @question.answers.empty?
+    p Answer list is empty. Do you want to answer?
+- else
+  - @question.answers.each do |answer|
+    ul
+      li = answer.body
+
+p= link_to 'Give an answer', new_question_answer_path(@question)

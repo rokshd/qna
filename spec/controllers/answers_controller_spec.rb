@@ -1,9 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe AnswerController, type: :controller do
+RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
 
   describe 'GET #new' do
+    sign_in_user
+
     before { get :new, params: { question_id: question } }
 
     it 'assigns a requested question to @question' do
@@ -18,6 +20,8 @@ RSpec.describe AnswerController, type: :controller do
   end
 
   describe 'POST #create' do
+    sign_in_user
+
     it 'assigns the requested question to @question' do
       post :create, params: { question_id: question,
         answer: attributes_for(:answer) }
