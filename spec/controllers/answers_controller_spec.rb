@@ -4,33 +4,6 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question) }
 
-  describe 'GET #new' do
-
-    context 'user is signed in' do
-      sign_in_user
-
-      before { get :new, params: { question_id: question } }
-
-      it 'assigns a requested question to @question' do
-        expect(assigns(:question)).to eq question
-      end
-      it 'assigns a new answer to @answer' do
-        expect(assigns(:answer)).to be_a_new(Answer)
-      end
-      it 'renders new view' do
-        expect(response).to render_template :new
-      end
-    end
-
-    context 'user is not signed in' do
-      before { get :new, params: { question_id: question} }
-
-      it 'redirect to sign in page' do
-        expect(response).to redirect_to new_user_session_path
-      end
-    end
-  end
-
   describe 'POST #create' do
     context 'user is signed in' do
       sign_in_user
@@ -46,6 +19,7 @@ RSpec.describe AnswersController, type: :controller do
           expect { post :create, params: { question_id: question, answer:
             attributes_for(:answer) } }.to change(question.answers,
               :count).by(1)
+          expect(assigns(:answer).user_id).to eq @user.id
         end
         it 'redirects to question view' do
           post :create, params: { question_id: question,
@@ -58,11 +32,6 @@ RSpec.describe AnswersController, type: :controller do
         it 'does not save the answer' do
           expect { post :create, params: { question_id: question, answer:
             attributes_for(:invalid_answer) } }.to_not change(Answer, :count)
-        end
-        it 're-renders new view' do
-          post :create, params: { question_id: question,
-            answer: attributes_for(:invalid_answer) }
-          expect(:response).to render_template :new
         end
       end
     end
@@ -98,21 +67,7 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
-    before { answer }
-    before { get :show, params: { id: answer } }
-
-    it 'assigns the requested answer to @answer' do
-      expect(assigns(:answer)).to eq answer
-    end
-
-    it 'renders show view' do
-      expect(response).to render_template :show
-    end
-  end
-
   describe 'DELETE #destroy' do
-
     context 'as a signed in user' do
       sign_in_user
 
@@ -129,6 +84,7 @@ RSpec.describe AnswersController, type: :controller do
           expect(response).to redirect_to answer.question
         end
       end
+
       context 'user is not the author of the question' do
         before { answer }
 
@@ -144,15 +100,15 @@ RSpec.describe AnswersController, type: :controller do
 
     end
 
-    context 'user is not signed in' do
+    context 'as a not signed in user' do
       before { answer }
 
-      it 'deletes the answer' do
+      it 'does not delete the answer' do
         expect { delete :destroy, params: { id: answer }
           }.to_not change(Answer, :count)
       end
 
-      it 'redirect to sign in page' do
+      it 'redirects to sign in page' do
         delete :destroy, params: { id: answer }
         expect(response).to redirect_to new_user_session_path
       end

@@ -10,14 +10,24 @@ feature 'Create answer', %q{
   given(:question) { create(:question) }
   given(:answer) { create(:answer) }
 
-  scenario 'Authenticated user creates an answer' do
+  scenario 'Authenticated user creates an answer with valid attributes' do
+      sign_in(user)
+
+      visit question_path(question)
+      fill_in 'Your answer:', with: answer.body
+      click_on 'Create'
+
+      expect(page).to have_content answer.body
+  end
+
+  scenario 'Authenticated user creates an answer with invalid attributes' do
     sign_in(user)
 
     visit question_path(question)
-    fill_in 'Your answer:', with: answer.body
+    fill_in 'Your answer:', with: ''
     click_on 'Create'
 
-    expect(page).to have_content answer.body
+    expect(page).to have_content "The answer has not been created."
   end
 
   scenario 'Non-authenticated user creates an answer' do
