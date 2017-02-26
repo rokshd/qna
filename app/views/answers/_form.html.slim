@@ -1,4 +1,4 @@
-div = form_for [@question, @answer] do |f|
+= form_for [@question, @answer] do |f|
   = render 'page/errors', item: @answer
   p= f.label :body, "Your answer:"
   p= f.text_area :body

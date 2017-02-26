@@ -13,7 +13,6 @@ class QuestionsController < ApplicationController
       flash[:notice] = 'Your question successfully created.'
       redirect_to @question
     else
-      flash[:notice] = 'Your question not created.'
       render :new
     end
   end

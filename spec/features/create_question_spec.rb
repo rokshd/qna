@@ -32,7 +32,10 @@ feature 'Create question', %q{
     fill_in 'Body', with: ''
     click_on 'Create'
 
-    expect(page).to have_content 'Your question not created.'
+    expect(page).to have_content 'Title can\'t be blank'
+    expect(page).to have_content 'Body can\'t be blank'
+    expect(page).to have_no_content question.title
+    expect(page).to have_no_content question.body
   end
 
   scenario 'Non-authenticated user tries to create quesition' do

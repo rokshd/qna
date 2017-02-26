@@ -24,10 +24,11 @@ feature 'Create answer', %q{
     sign_in(user)
 
     visit question_path(question)
-    fill_in 'Your answer:', with: ''
+    fill_in 'Your answer:', with: nil
     click_on 'Create'
 
-    expect(page).to have_content "The answer has not been created."
+    expect(page).to have_content 'Body can\'t be blank'
+    expect(page).to have_no_content answer.body
   end
 
   scenario 'Non-authenticated user creates an answer' do

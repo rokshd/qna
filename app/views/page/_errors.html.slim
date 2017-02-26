@@ -1,2 +1,6 @@
 - if item.errors.any?
-/ i don't know (understand) what a code i should write here =(
+  div id="error_explanation"
+    = pluralize(item.errors.count, "error")
+    ul
+      - item.errors.full_messages.each do |message|
+        li= message
