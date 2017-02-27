@@ -4,14 +4,15 @@ RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
 
   describe 'GET #new' do
-
     context 'user is signed in' do
       sign_in_user
+
       before { get :new }
 
       it 'assigns a new question to @question' do
         expect(assigns(:question)).to be_a_new(Question)
       end
+
       it 'renders new view' do
         expect(:response).to render_template :new
       end
@@ -36,6 +37,7 @@ RSpec.describe QuestionsController, type: :controller do
             attributes_for(:question) } }.to change(Question, :count).by(1)
           expect(assigns(:question).user_id).to eq @user.id
         end
+
         it 'redirects to show view' do
           post :create, params: { question: attributes_for(:question) }
           expect(response).to redirect_to assigns(:question)
@@ -48,6 +50,7 @@ RSpec.describe QuestionsController, type: :controller do
             attributes_for(:invalid_question) }
               }.to_not change(Question, :count)
         end
+
         it 're-renders new view' do
           post :create, params: { question: attributes_for(:invalid_question) }
           expect(:response).to render_template :new
@@ -113,6 +116,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'user is signed in' do
       sign_in_user
+
       context 'user is the author of the question' do
         let(:question) { create(:question, user: @user) }
 

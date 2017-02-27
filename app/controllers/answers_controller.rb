@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question, notice: 'The answer has been successfully created.'
     else
-      # render :new
+      flash[:error] = 'The answer has not been created.'
       render "questions/show"
     end
   end

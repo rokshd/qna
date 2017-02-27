@@ -10,9 +10,10 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
     if @question.save
-      flash[:notice] = 'Your question successfully created.'
+      flash[:notice] = 'Your question has been successfully created.'
       redirect_to @question
     else
+      flash[:error] = 'The question has not been created.'
       render :new
     end
   end
