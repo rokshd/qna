@@ -19,13 +19,12 @@ RSpec.describe AnswersController, type: :controller do
           expect { post :create, params: { question_id: question, answer:
             attributes_for(:answer) } }.to change(question.answers,
               :count).by(1)
-          expect(assigns(:answer).user_id).to eq @user.id
         end
 
         it 'assigns the new answer to the @user' do
           post :create, params: { question_id: question,
             answer: attributes_for(:answer) }
-          expect(assigns(:answer).user).to eq @user
+          expect(assigns(:answer).user_id).to eq @user.id
         end
 
         it 'redirects to question view' do
