@@ -4,20 +4,20 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find(params[:question_id])
 
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
     @answer.user = current_user
 
     if @answer.save
-      redirect_to @question, notice: 'The answer has been successfully created.'
+      flash[:notice] = 'The answer has been successfully created.'
     else
-      flash[:error] = 'The answer has not been created.'
-      render "questions/show"
+      flash[:alert] = 'The answer has not been created.'
+      # render "questions/show"
     end
   end
 
   def destroy
     @answer = Answer.find(params[:id])
-    
+
     if current_user.author_of? @answer
       @answer.destroy
       flash[:notice] = 'The answer has been successfully deleted.'

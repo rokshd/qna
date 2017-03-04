@@ -12,12 +12,16 @@ gem 'jbuilder', '~> 2.5'
 gem 'slim-rails'
 gem 'thor', '0.19.1'
 gem 'devise'
-gem 'launchy'
 
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'launchy'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'capybara-webkit'
+  # gem 'selenium-webdriver'
 end
 
 group :development do
@@ -30,7 +34,6 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
-  gem 'capybara'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
