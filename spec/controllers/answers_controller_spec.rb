@@ -10,39 +10,41 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'assigns the requested question to @question' do
         post :create, params: { question_id: question,
-          answer: attributes_for(:answer) }
+          answer: attributes_for(:answer), format: :js }
         expect(assigns(:question)).to eq question
       end
 
       context 'with valid attributes' do
         it 'saves the new answer to database' do
           expect { post :create, params: { question_id: question, answer:
-            attributes_for(:answer) } }.to change(question.answers,
-              :count).by(1)
+            attributes_for(:answer), format: :js }
+              }.to change(question.answers, :count).by(1)
         end
 
         it 'assigns the new answer to the @user' do
           post :create, params: { question_id: question,
-            answer: attributes_for(:answer) }
+            answer: attributes_for(:answer), format: :js }
           expect(assigns(:answer).user_id).to eq @user.id
         end
 
-        it 'redirects to question view' do
+        it 'render create template' do
           post :create, params: { question_id: question,
-            answer: attributes_for(:answer) }
-          expect(response).to redirect_to assigns(:question)
+            answer: attributes_for(:answer), format: :js }
+          expect(response).to render_template :create
         end
       end
 
       context 'with invalid attributes' do
         it 'does not save the answer' do
           expect { post :create, params: { question_id: question, answer:
-            attributes_for(:invalid_answer) } }.to_not change(Answer, :count)
+            attributes_for(:invalid_answer), format: :js }
+              }.to_not change(Answer, :count)
         end
 
-        it 're-renders new view' do
-          post :create, params: { question_id: question, answer: attributes_for(:invalid_answer) }
-          expect(response).to render_template 'questions/show'
+        it 'render create template' do
+          post :create, params: { question_id: question,
+            answer: attributes_for(:invalid_answer), format: :js }
+          expect(response).to render_template :create
         end
       end
     end
@@ -56,8 +58,8 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirect to sign in page' do
         post :create, params: { question_id: question,
-          answer: attributes_for(:answer) }
-        expect(response).to redirect_to new_user_session_path
+          answer: attributes_for(:answer), format: :js }
+        expect(response).to have_http_status(401)
       end
     end
   end
