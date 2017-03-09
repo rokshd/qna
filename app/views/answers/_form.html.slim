@@ -1,5 +1,6 @@
 = form_for [@question, @answer], remote: true do |f|
   = render 'page/errors', item: @answer
   p= f.label :body, "Your answer:"
+  .answer-errors
   p= f.text_area :body
   = f.submit 'Create'

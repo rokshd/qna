@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'feature_helper'
 
 feature 'User sign out', %q{
   In order to be able to go out
@@ -10,7 +10,7 @@ feature 'User sign out', %q{
 
   scenario 'Signed user tries to sign out' do
     sign_in(user)
-    
+
     click_on 'Sign Out'
 
     expect(page).to have_content 'Signed out successfully.'

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'feature_helper'
 
 feature 'Create answer', %q{
   In order to give own solution
@@ -31,8 +31,8 @@ feature 'Create answer', %q{
     click_on 'Create'
 
     expect(current_path).to eq question_path(question)
-    within '.answers' do
-      expect(page).to have_no_content answer.body
+    within '.answer-errors' do
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
