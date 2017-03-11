@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_answer, only: [:destroy, :update]
+  before_action :set_answer, only: [:destroy, :update, :mark_best]
+  before_action :set_question, only: [:destroy, :update, :mark_best]
 
   def create
     @question = Question.find(params[:question_id])
@@ -18,7 +19,6 @@ class AnswersController < ApplicationController
   def update
     if current_user.author_of? @answer
       @answer.update(answer_params)
-      @question = @answer.question
       flash[:notice] = 'The answer has been successfully updated.'
     else
       flash[:alert] = 'The answer has not been updated.'
@@ -27,7 +27,6 @@ class AnswersController < ApplicationController
 
   def destroy
     if current_user.author_of? @answer
-      @question = @answer.question
       @answer.destroy
       flash[:notice] = 'The answer has been successfully deleted.'
     else
@@ -35,13 +34,27 @@ class AnswersController < ApplicationController
     end
   end
 
+  def mark_best
+    if current_user.author_of?(@question)
+      @question.reset_best_status
+      @answer.update(best: true)
+      flash[:notice] ='The answer has been marked as the best.'
+    else
+      flash[:alert] ='You can not mark this answer.'
+    end
+  end
+
   private
+
+  def set_question
+    @question = @answer.question
+  end
 
   def set_answer
     @answer = Answer.find(params[:id])
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, :best)
   end
 end
