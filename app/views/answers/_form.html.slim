@@ -2,5 +2,5 @@
   = render 'page/errors', item: @answer
   p= f.label :body, "Your answer:"
   .answer-errors
-  p= f.text_area :body
+  p= f.text_area :body, cols: '40', rows: '3', class: 'new-answer-form'
   = f.submit 'Create'

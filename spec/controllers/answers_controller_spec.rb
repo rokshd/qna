@@ -167,12 +167,13 @@ RSpec.describe AnswersController, type: :controller do
         let!(:answer) { create(:answer, question: question, user: @user) }
 
         it 'deletes the answer' do
-          expect { delete :destroy, params: { id: answer } }.to change(
-            question.answers, :count).by(-1)
+          expect { delete :destroy, params: { id: answer, format: :js }
+            }.to change(question.answers, :count).by(-1)
         end
-        it 'redirects to index view' do
-          delete :destroy, params: { id: answer }
-          expect(response).to redirect_to answer.question
+
+        it 'render question view' do
+          delete :destroy, params: { id: answer, format: :js }
+          expect(response).to render_template :destroy
         end
       end
 
@@ -180,12 +181,12 @@ RSpec.describe AnswersController, type: :controller do
         before { answer }
 
         it 'deletes the answer' do
-          expect { delete :destroy, params: { id: answer }
+          expect { delete :destroy, params: { id: answer, format: :js }
             }.to_not change(Answer, :count)
         end
         it 'redirects to index view' do
-          delete :destroy, params: { id: answer }
-          expect(response).to redirect_to answer.question
+          delete :destroy, params: { id: answer, format: :js }
+          expect(response).to render_template :destroy
         end
       end
 
@@ -195,13 +196,13 @@ RSpec.describe AnswersController, type: :controller do
       before { answer }
 
       it 'does not delete the answer' do
-        expect { delete :destroy, params: { id: answer }
-          }.to_not change(Answer, :count)
+        expect { delete :destroy, params: { id: answer,
+          format: :js } }.to_not change(Answer, :count)
       end
 
       it 'redirects to sign in page' do
-        delete :destroy, params: { id: answer }
-        expect(response).to redirect_to new_user_session_path
+        delete :destroy, params: { id: answer, format: :js }
+        expect(response).to have_http_status(401)
       end
     end
   end
