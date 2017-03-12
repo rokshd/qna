@@ -1,9 +1,7 @@
 ul
   - if answer.persisted?
-    - if answer.best == true
+    - if answer.best?
       li= 'Best Answer'
-    - else
-      li= 'QQQQQQQQQQQ'
     li= answer.body    
     - if user_signed_in? && current_user.author_of?(answer)
       p= link_to 'Edit answer', '', class: 'edit-answer-link', 
@@ -18,7 +16,7 @@ ul
         = f.text_area :body
         = f.submit 'Save Answer'
     - if user_signed_in? && current_user.author_of?(answer.question)
-      - if answer.best
+      - if answer.best?
         = link_to 'Remove the mark of best answer', 
           mark_best_answer_path(answer), method: :patch, remote: true
       - else

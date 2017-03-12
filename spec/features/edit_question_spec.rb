@@ -52,7 +52,7 @@ feature 'Edit question', %q{
         visit question_path(question)
       end
 
-      scenario 'tries to make changes', js: true do
+      scenario 'tries to make changes' do
         within '.question' do
           expect(page).to_not have_link 'Edit'
         end
@@ -61,7 +61,7 @@ feature 'Edit question', %q{
   end
 
   context 'as a not signed in user' do
-    scenario 'tries to make changes', js: true do
+    scenario 'tries to make changes' do
       visit question_path(question)
       expect(page).to_not have_link 'Edit'
     end

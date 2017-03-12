@@ -36,8 +36,7 @@ class AnswersController < ApplicationController
 
   def mark_best
     if current_user.author_of?(@question)
-      @question.reset_best_status
-      @answer.update(best: true)
+      @answer.set_best_status
       flash[:notice] ='The answer has been marked as the best.'
     else
       flash[:alert] ='You can not mark this answer.'
@@ -55,6 +54,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, :best)
+    params.require(:answer).permit(:body)
   end
 end

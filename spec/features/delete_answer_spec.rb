@@ -21,14 +21,14 @@ feature 'Delete answer', %q{
     expect(page).to have_no_content answer.body
   end
 
-  scenario 'Authenticated user tries to delete an any answer', js: true do
+  scenario 'Authenticated user tries to delete an any answer' do
     sign_in(main_in_black)
     visit question_path(question)
 
     expect(page).to have_no_link 'Delete answer'
   end
 
-  scenario 'Non-authenticated user tries to delete an answer', js: true do
+  scenario 'Non-authenticated user tries to delete an answer' do
     visit question_path(question)
 
     expect(page).to have_no_link 'Delete answer'
