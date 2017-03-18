@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_question, only: [:show, :destroy]
+  before_action :set_question, only: [:show, :destroy, :update]
 
   def new
     @question = Question.new
@@ -18,6 +18,23 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def index
+    @questions = Question.all
+  end
+
+  def show
+    @answer = Answer.new
+  end
+
+  def update
+    if current_user.author_of? @question
+      @question.update(question_params)
+      flash[:notice] = 'The question has been successfully updated.'
+    else
+      flash[:alert] = 'The question has not been updated.'
+    end
+  end
+
   def destroy
     if current_user.author_of? @question
       @question.destroy
@@ -26,14 +43,6 @@ class QuestionsController < ApplicationController
       flash[:alert] = 'The question has not been deleted.'
     end
     redirect_to questions_path
-  end
-
-  def index
-    @questions = Question.all
-  end
-
-  def show
-    @answer = Answer.new
   end
 
   private

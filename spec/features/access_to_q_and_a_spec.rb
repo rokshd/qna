@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'feature_helper'
 
 feature 'Access to question and question\'s answers', %q{
   In order to find the answer to important question
