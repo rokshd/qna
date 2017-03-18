@@ -67,6 +67,13 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #update' do
     context 'as a signed in user' do
       sign_in_user
+
+      it 'assigns the requested answer to @answer' do
+        patch :update, params: { id: answer, question_id: question,
+          answer: attributes_for(:answer), format: :js }
+        expect(assigns(:answer)).to eq answer
+      end
+
       context 'and author of the answer' do
         context 'with valid attributes' do
           let(:answer) { create(:answer, question: question, user: @user) }
@@ -75,12 +82,6 @@ RSpec.describe AnswersController, type: :controller do
             patch :update, params: { id: answer, question_id: question,
               answer: attributes_for(:answer), format: :js }
             expect(assigns(:question)).to eq question
-          end
-
-          it 'assigns the requested answer to @answer' do
-            patch :update, params: { id: answer, question_id: question,
-              answer: attributes_for(:answer), format: :js }
-            expect(assigns(:answer)).to eq answer
           end
 
           it 'changes an answer attributes' do
@@ -105,12 +106,6 @@ RSpec.describe AnswersController, type: :controller do
             expect(assigns(:question)).to eq question
           end
 
-          it 'assings the requested answer to @answer' do
-            patch :update, params: { id: answer, question_id: question,
-              answer: attributes_for(:answer), format: :js }
-            expect(assigns(:answer)).to eq answer
-          end
-
           it 'changes answer attributes' do
             patch :update, params: { id: answer, question_id: question,
               answer: { body: nil}, format: :js }
@@ -122,12 +117,6 @@ RSpec.describe AnswersController, type: :controller do
       context 'and a not author of the answer' do
         let(:user) { create(:user) }
         let(:answer) { create(:answer, question: question, user: user) }
-
-        it 'assings the requested answer to @answer' do
-          patch :update, params: { id: answer, question_id: question,
-            answer: attributes_for(:answer), format: :js }
-          expect(assigns(:answer)).to eq answer
-        end
 
         it 'does not change answer attributes' do
           patch :update, params: { id: answer, question_id: question,

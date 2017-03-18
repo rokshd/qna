@@ -6,10 +6,10 @@ class Answer < ApplicationRecord
 
   scope :helpful, -> { order(best: :desc).order(created_at: :asc) }
 
-  def set_best_status
+  def set_best
     self.transaction do
       self.question.answers.update_all(best: false)
-      self.update(best: true)
+      self.update!(best: true)
     end
   end
 end

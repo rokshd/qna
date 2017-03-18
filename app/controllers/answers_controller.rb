@@ -36,7 +36,7 @@ class AnswersController < ApplicationController
 
   def mark_best
     if current_user.author_of?(@question)
-      @answer.set_best_status
+      @answer.set_best
       flash[:notice] ='The answer has been marked as the best.'
     else
       flash[:alert] ='You can not mark this answer.'

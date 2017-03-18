@@ -11,7 +11,7 @@ RSpec.describe Answer, type: :model do
     let!(:answer2) { create(:answer, question: question)}
     let!(:answer3) { create(:answer, question: question)}
 
-    before { answer3.set_best_status }
+    before { answer3.set_best }
 
     it "changes value from true to false to the old best answer" do
       answer1.reload
