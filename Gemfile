@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'slim-rails'
 gem 'thor', '0.19.1'
 gem 'devise'
+gem 'carrierwave'
 
 group :development, :test do
   gem 'byebug', platform: :mri
