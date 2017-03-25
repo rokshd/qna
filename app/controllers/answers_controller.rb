@@ -5,7 +5,6 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
-
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
 
@@ -54,6 +53,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, attachments_attributes: [:file])
   end
 end

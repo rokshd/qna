@@ -3,4 +3,8 @@
   p= f.label :body, "Your answer:"
   .answer-errors
   p= f.text_area :body, cols: '40', rows: '3', class: 'new-answer-form'
+  p
+    = f.fields_for :attachments do |a|
+      = a.label :file
+      = a.file_field :file
   = f.submit 'Create'

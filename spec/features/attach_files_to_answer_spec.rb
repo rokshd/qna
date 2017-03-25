@@ -13,7 +13,7 @@ feature 'Add files to answer', %q{
     visit question_path(question)
   end
 
-  scenario 'User attach file when make an answer' do
+  scenario 'User attach file when make an answer', js: true do
     fill_in 'Your answer', with: "blabla"
     attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
     click_on 'Create'

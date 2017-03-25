@@ -13,6 +13,7 @@ gem 'slim-rails'
 gem 'thor', '0.19.1'
 gem 'devise'
 gem 'carrierwave'
+gem 'remotipart'
 
 group :development, :test do
   gem 'byebug', platform: :mri

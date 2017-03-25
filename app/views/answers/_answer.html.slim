@@ -2,7 +2,10 @@ ul id="answer-#{answer.id}"
   - if answer.persisted?
     - if answer.best?
       li= 'Best Answer'
-    li= answer.body    
+    li= answer.body
+    - answer.attachments.each do |a|
+      = link_to a.file.identifier, a.file.url
+        
     - if user_signed_in? && current_user.author_of?(answer)
       p= link_to 'Edit answer', '', class: 'edit-answer-link', 
             data: { answer_id: answer.id }
