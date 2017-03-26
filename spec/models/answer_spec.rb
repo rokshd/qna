@@ -6,7 +6,7 @@ RSpec.describe Answer, type: :model do
   it { should belong_to :user }
   it { should validate_presence_of :body }
 
-  it { should accept_nested_attributes_for :attachments }
+  it { should accept_nested_attributes_for(:attachments).allow_destroy(true) }
 
   describe "set best_status" do
     let!(:question) { create(:question) }

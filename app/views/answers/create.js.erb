@@ -1,8 +1,12 @@
 <% if @answer.errors.present? %>
+  $('.answer-errors').html('');
   <% @answer.errors.full_messages.each do |message| %>
     $('.answer-errors').html('<%= j message %>');
   <% end %>
 <% else %>
-  $('.answers').append('<%= j render @answer %>');
   $('.new-answer-form').val('');
+  $('.answer-errors').html('');
+  $('.answers').append('<%= j render @answer %>');
+  $('.nested-fields').remove();
+  $('.add_fields').trigger("click");
 <% end %>
