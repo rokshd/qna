@@ -21,7 +21,7 @@ feature 'Add files to answer', %q{
 
     within '.answers' do
       expect(page).to have_link 'rails_helper.rb',
-        href: '/uploads/attachment/file/1/rails_helper.rb'
+        href: /\/uploads\/attachment\/file\/\d+\/rails_helper.rb/
     end
   end
 
