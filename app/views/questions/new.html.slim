@@ -4,4 +4,12 @@
   p= f.text_field :title
   p= f.label :body
   p= f.text_area :body
-  p= f.submit 'Create'
+  
+  h5 Attachments:
+  .question-attachments
+    p
+      = f.fields_for :attachments do |file|
+        = render 'common/attachment_fields', f: file
+      p = link_to_add_association 'attach next file', 
+        f, :attachments, partial: 'common/attachment_fields'
+  = f.submit 'Create'

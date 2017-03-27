@@ -3,4 +3,11 @@
   p= f.label :body, "Your answer:"
   .answer-errors
   p= f.text_area :body, cols: '40', rows: '3', class: 'new-answer-form'
+  
+  h5 Attachments:
+  .answer-attachments
+    = f.fields_for :attachments do |file|
+        = render 'common/attachment_fields', f: file
+    p= link_to_add_association 'attach next file', 
+      f, :attachments, partial: 'common/attachment_fields'
   = f.submit 'Create'
